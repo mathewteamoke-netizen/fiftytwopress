@@ -5,26 +5,28 @@ import os, html
 OUT = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://fiftytwopress.com"
 EMAIL = "hello@fiftytwopress.com"
+TAG = ""  # Amazon Associates tracking id, e.g. fiftytwopress-22
+AMZ = "https://www.amazon.com.au/dp/"
 
 TIERS = [
     dict(slug="executive", short="Executive", n=1, colour="Emerald", cover="#0E3A2A", title="The Executive Diary",
          who="For the person carrying the whole operation.", price="$39.99",
-         amazon="https://www.amazon.com.au/dp/PLACEHOLDER-EXECUTIVE",
+         amazon=AMZ+"B0HNHPQP2W",
          why="You answer for everything and everyone. This one gives the week a shape before the week gives you one.",
          blurb="A 52-week planner built for people who carry the whole operation. Each week gives you a full planning spread, a colouring panel to switch your head off for ten minutes, and a green-to-red stress score so you can see the drift before it becomes a problem."),
     dict(slug="manager", short="Manager", n=2, colour="Navy", cover="#0B1A3A", title="The Manager's Diary",
          who="For running a department, a project or a crew of leaders.", price="$34.99",
-         amazon="https://www.amazon.com.au/dp/PLACEHOLDER-MANAGER",
+         amazon=AMZ+"B0HNFW9PZN",
          why="Meetings above, people below. The weekly spread keeps both in view; the score tells you which one is winning.",
          blurb="For the person running a department, a project or a crew of leaders. A full weekly planning spread, a colouring panel to reset between the meetings, and a green-to-red stress score that tells you when the week got away from you."),
     dict(slug="team-leader", short="Team Leader", n=3, colour="Burgundy", cover="#3A0E16", title="The Team Leader's Diary",
          who="For the first step into leading people.", price="$29.99",
-         amazon="https://www.amazon.com.au/dp/PLACEHOLDER-TEAM-LEADER",
+         amazon=AMZ+"B0HNHRTV7S",
          why="Pressure from both directions and no manual. Learn your own pattern early, before it becomes a habit.",
          blurb="For the first step into leading people, where the pressure comes from both directions. A weekly planning spread, a colouring panel for the end of a long shift, and a green-to-red stress score so you learn your own pattern early."),
     dict(slug="professional", short="Professional", n=4, colour="Charcoal", cover="#1A1B1E", title="The Professional's Diary",
          who="For serious work without a team to hide behind.", price="$29.99",
-         amazon="https://www.amazon.com.au/dp/PLACEHOLDER-PROFESSIONAL",
+         amazon=AMZ+"B0HNHY7XWJ",
          why="Nobody is checking in on you but you. The score makes that check-in a two-minute habit.",
          blurb="For anyone doing serious work without a team to hide behind. A weekly planning spread, a colouring panel to put the day down, and a green-to-red stress score that keeps you honest about how you're really travelling."),
 ]
@@ -42,6 +44,8 @@ FAQS = [
 ]
 
 E = html.escape
+def amz(t):
+    return t['amazon'] + (f"?tag={TAG}" if TAG else "")
 
 MARK = '''<svg width="{s}" height="{s}" viewBox="0 0 100 100" aria-hidden="true"><rect x="3" y="3" width="94" height="94" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="9" y="9" width="82" height="82" fill="none" stroke="currentColor" stroke-width="1"/><path d="M9 17V9h8M83 9h8v8M91 83v8h-8M17 91H9v-8" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="50" y="64" text-anchor="middle" font-family="Cormorant Garamond, serif" font-weight="700" font-size="46" letter-spacing="-1" fill="currentColor">52</text><path d="M34 74h32" stroke="currentColor" stroke-width="1.2"/></svg>'''
 
@@ -94,11 +98,11 @@ def home():
     ex, rest = TIERS[0], TIERS[1:]
     cards = f'''<article class="tier feature rv"><a href="/diaries/{ex['slug']}/" aria-label="{E(ex['title'])}, see details">{book(ex, 28)}</a>
 <div class="body"><span class="badge">Tier 1 &middot; Emerald</span><h3 class="h3" style="font-size:34px">{E(ex['title'])}</h3><p class="muted">{E(ex['who'])} {E(ex['why'])}</p>
-<div class="row" style="border-top:0;padding-top:4px;justify-content:flex-start;gap:20px"><span class="price">{ex['price']}<small>AUD</small></span><a href="{ex['amazon']}" class="cta-amazon" rel="sponsored noopener" target="_blank">Order on Amazon</a><a href="/diaries/{ex['slug']}/" class="cta-read">Details</a></div><span class="ship">Printed and shipped by Amazon</span></div></article>'''
+<div class="row" style="border-top:0;padding-top:4px;justify-content:flex-start;gap:20px"><span class="price">{ex['price']}<small>AUD</small></span><a href="{amz(ex)}" class="cta-amazon" rel="sponsored noopener" target="_blank">Order on Amazon</a><a href="/diaries/{ex['slug']}/" class="cta-read">Details</a></div><span class="ship">Printed and shipped by Amazon</span></div></article>'''
     for t in rest:
         cards += f'''<article class="tier rv"><a href="/diaries/{t['slug']}/" aria-label="{E(t['title'])}, see details">{book(t)}</a>
 <span class="badge">Tier {t['n']} &middot; {t['colour']}</span><h3 class="h3">{E(t['title'])}</h3><p class="who">{E(t['who'])}</p>
-<div class="row"><span class="price">{t['price']}<small>AUD</small></span><a href="{t['amazon']}" class="cta-amazon" rel="sponsored noopener" target="_blank">Order on Amazon</a></div><span class="ship">Printed and shipped by Amazon</span></article>'''
+<div class="row"><span class="price">{t['price']}<small>AUD</small></span><a href="{amz(t)}" class="cta-amazon" rel="sponsored noopener" target="_blank">Order on Amazon</a></div><span class="ship">Printed and shipped by Amazon</span></article>'''
     body = f'''
 <section class="hero" aria-labelledby="hero-h"><img src="/assets/photos/hero.jpg" alt="" fetchpriority="high"><div class="wrap"><div class="hero-panel">
 <span class="eyebrow">Fifty Two Press &middot; Brisbane</span><h1 id="hero-h" class="h1">Diaries that keep you honest about the week.</h1>
@@ -152,7 +156,7 @@ def diary(t):
 <h1 class="h1" style="font-size:clamp(36px,4.6vw,58px)">{E(t['title'])}</h1>
 <p class="lede" style="margin-top:0">{E(t['who'])}</p>
 <div class="price" style="font-size:30px">{t['price']}<small>AUD</small></div>
-<div style="display:flex;gap:10px;flex-wrap:wrap"><a href="{t['amazon']}" class="cta-amazon-big" rel="sponsored noopener" target="_blank">Order on Amazon</a></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><a href="{amz(t)}" class="cta-amazon-big" rel="sponsored noopener" target="_blank">Order on Amazon</a></div>
 <p class="muted" style="font-size:15px">Printed by Amazon. Their print-on-demand is the only way we can offer hardcover and full-colour pages at this price, so you check out on Amazon with their delivery, returns and Prime shipping. Opens in a new tab.</p>
 <p>{E(t['blurb'])}</p>
 <dl class="spec"><div><dt>Format</dt><dd>Paperback, matte cover</dd></div><div><dt>Pages</dt><dd>124</dd></div><div><dt>Weeks</dt><dd>52, undated</dd></div><div><dt>Check-ins</dt><dd>4 quarterly reviews</dd></div><div><dt>Colouring</dt><dd>One panel every day</dd></div><div><dt>Stress score</dt><dd>Green to red, daily</dd></div></dl>
@@ -169,7 +173,7 @@ def diary(t):
 
 <section class="sec" aria-labelledby="oth-h" style="background:var(--c-soft)"><div class="wrap"><div class="rv"><span class="eyebrow">The rest of the series</span><h2 id="oth-h" class="h2">Same book. Different week.</h2></div>
 <div class="grid g3" style="margin-top:40px">{oth}</div></div></section>
-<div class="buybar" aria-label="Buy"><span class="price">{t['price']}<small>AUD</small></span><a href="{t['amazon']}" class="cta-amazon-big" rel="sponsored noopener" target="_blank">Order on Amazon</a></div>'''
+<div class="buybar" aria-label="Buy"><span class="price">{t['price']}<small>AUD</small></span><a href="{amz(t)}" class="cta-amazon-big" rel="sponsored noopener" target="_blank">Order on Amazon</a></div>'''
     return page(f"{t['title']} | Fifty Two Press", t["blurb"], f"/diaries/{t['slug']}/", body, has_buybar=True)
 
 def write(path, s):
