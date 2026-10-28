@@ -68,9 +68,11 @@ def price_html(t, size=None):
     return f'<span class="price" data-price="{t["slug"]}"{st}>See price on Amazon</span>'
 def buy(t, cls, label="Order on Amazon"):
     return f'<a href="{amz(t)}" class="{cls} buy" data-asin="{t["asin"]}" rel="sponsored noopener" target="_blank">{label}</a>'
-def store_select():
+def store_select(big=False):
     opts = "".join(f'<option value="{x["code"]}">{x["label"]}</option>' for x in STORES)
-    return f'<label class="store"><span>Your Amazon store</span><select id="store" aria-label="Choose your Amazon store">{opts}</select></label>'
+    if big:
+        return f'<div class="store-bar"><label><span class="eyebrow">Choose your Amazon store</span><select class="store-sync" aria-label="Choose your Amazon store">{opts}</select></label><span class="muted">Prices and Order buttons change to match. You check out on that Amazon store.</span></div>'
+    return f'<label class="store"><span>Your Amazon store</span><select id="store" class="store-sync" aria-label="Choose your Amazon store">{opts}</select></label>'
 def store_json():
     return json.dumps({"stores": STORES, "prices": PRICES}, separators=(",", ":"))
 
@@ -140,6 +142,7 @@ def home():
 <div class="rv" style="max-width:720px"><span class="eyebrow">The Back to Green Series</span><h2 id="series-h" class="h2">Four tiers. One idea: get back to green.</h2>
 <p class="lede">Same book inside. The tier is about your job, not what you get.</p>
 <div class="why-amazon"><strong>Why you order on Amazon.</strong> {E(WHY_AMAZON)}</div></div>
+              {store_select(big=True)}
 <div class="grid g3" style="margin-top:48px">{cards}</div></div></section>
 
 <section id="inside" class="sec dark" aria-labelledby="inside-h"><div class="wrap">

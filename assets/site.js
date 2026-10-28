@@ -61,6 +61,9 @@
     sel.value = code;
     try { localStorage.setItem("ftp-store", code); } catch (e) {}
   }
-  sel.addEventListener("change", function () { apply(sel.value); });
-  apply(guess());
+  var all = document.querySelectorAll("select.store-sync");
+  all.forEach(function (x) { x.addEventListener("change", function () { apply(x.value); }); });
+  function applyAll(code) { apply(code); all.forEach(function (x) { x.value = code; }); }
+  all.forEach(function (x) { x.addEventListener("change", function () { applyAll(x.value); }); });
+  applyAll(guess());
 })();
