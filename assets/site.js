@@ -30,3 +30,37 @@
   }, { rootMargin: "0px 0px -8% 0px", threshold: 0.1 });
   els.forEach(function (e) { io.observe(e); });
 })();
+(function () {
+  var cfg = document.getElementById("store-config"); if (!cfg) return;
+  cfg = JSON.parse(cfg.textContent);
+  var sel = document.getElementById("store"); if (!sel) return;
+  var byCode = {}; cfg.stores.forEach(function (s) { byCode[s.code] = s; });
+  function guess() {
+    try { var saved = localStorage.getItem("ftp-store"); if (saved && byCode[saved]) return saved; } catch (e) {}
+    var langs = (navigator.languages || [navigator.language || ""]);
+    for (var i = 0; i < langs.length; i++) {
+      var m = /-([A-Z]{2})$/i.exec(langs[i] || ""); if (!m) continue;
+      var c = m[1].toUpperCase(); if (c === "UK") c = "GB";
+      if (byCode[c]) return c;
+      if (["AT","BE","CH","LU","PL","CZ","SE","DK","FI","NO","IE","PT","GR"].indexOf(c) >= 0) return "DE";
+      if (c === "NZ") return "AU";
+    }
+    return "AU";
+  }
+  function apply(code) {
+    var s = byCode[code] || byCode.AU;
+    document.querySelectorAll("a.buy").forEach(function (a) {
+      var asin = a.getAttribute("data-asin");
+      a.href = "https://www." + s.domain + "/dp/" + asin + (s.tag ? "?tag=" + s.tag : "");
+    });
+    document.querySelectorAll("[data-price]").forEach(function (el) {
+      var p = (cfg.prices[el.getAttribute("data-price")] || {})[code];
+      el.innerHTML = p ? p + '<small>' + s.cur + '</small>' : "See price on Amazon";
+    });
+    document.querySelectorAll("[data-storename]").forEach(function (el) { el.textContent = s.domain; });
+    sel.value = code;
+    try { localStorage.setItem("ftp-store", code); } catch (e) {}
+  }
+  sel.addEventListener("change", function () { apply(sel.value); });
+  apply(guess());
+})();
