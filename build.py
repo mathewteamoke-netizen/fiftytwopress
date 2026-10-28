@@ -90,7 +90,7 @@ def header():
 
 def footer():
     return f'''<footer class="footer"><div class="wrap grid g4" style="padding-top:64px;padding-bottom:40px;gap:32px">
-<div style="display:flex;flex-direction:column;gap:14px">{lockup(light=True)}<span>Brisbane, Queensland. Printed and shipped by Amazon.</span></div>
+<div style="display:flex;flex-direction:column;gap:14px">{lockup(light=True)}<span>Printed and shipped by Amazon, worldwide.</span></div>
 <div style="display:flex;flex-direction:column;gap:10px"><strong>Series</strong><a href="/#series">The Back to Green Series</a><span>More series coming</span></div>
 <div style="display:flex;flex-direction:column;gap:10px"><strong>Help</strong><a href="/#faq">How to order</a><a href="/#faq">Which tier is mine?</a><a href="mailto:{EMAIL}">Contact</a></div>
 <div style="display:flex;flex-direction:column;gap:10px"><strong>New series</strong><span>Leave your email and we will tell you when the next series is on sale.</span>
@@ -134,7 +134,7 @@ def home():
 <div class="row">{price_html(t)}{buy(t,"cta-amazon")}</div><span class="ship">Printed and shipped by Amazon &middot; <span data-storename>amazon.com.au</span></span></article>'''
     body = f'''
 <section class="hero" aria-labelledby="hero-h"><img src="/assets/photos/hero.jpg" alt="" fetchpriority="high"><div class="wrap"><div class="hero-panel">
-<span class="eyebrow">Fifty Two Press &middot; Brisbane</span><h1 id="hero-h" class="h1">Diaries that keep you honest about the week.</h1>
+<span class="eyebrow">Fifty Two Press</span><h1 id="hero-h" class="h1">Diaries that keep you honest about the week.</h1>
 <p class="lede hero-copy">A diary is the one friend who hears the whole week, the wins and the losses, and keeps every word to itself. It waits up for you. It doesn't mind the crossed-out days or the ones you skipped entirely. It takes whatever you bring it: plans, regrets, victories, and the honest colour of how things really went. It holds it all without judgement. Fifty-two weeks of that, and you've written something nobody else could have: a true account of a year, kept by the only person who was there for every moment of it.</p>
 <div class="hero-ctas"><a href="#series" class="cta-series">Shop the series</a><a href="#score" class="cta-score">Try the stress score</a></div></div></div></section>
 
@@ -163,7 +163,7 @@ def home():
 <section id="about" class="sec" aria-labelledby="about-h" style="background:var(--c-soft)"><div class="wrap split">
 <figure class="photo rv"><img src="/assets/photos/stack.jpg" alt="The four Back to Green diaries stacked on a desk" loading="lazy"></figure>
 <div class="rv"><span class="eyebrow">About the press</span><h2 id="about-h" class="h2">Made by someone who needed one.</h2>
-<p class="lede">Fifty Two Press started on a construction site in Queensland. The planners on the shelf were corporate and joyless, or pretty and useless. None of them asked the only question that mattered: how are you actually travelling? So we made one that does.</p>
+<p class="lede">Fifty Two Press started on a construction site. The planners on the shelf were corporate and joyless, or pretty and useless. None of them asked the only question that mattered: how are you actually travelling? So we made one that does.</p>
 <div class="author"><span class="eyebrow">About the author</span><h3 class="h3">Mr Capital T</h3><p>Mr Capital T is the pen name of the founder of Fifty Two Press. He wrote the Back to Green Series for people whose weeks run flat out: a diary that plans the week, gives you ten minutes with a pencil, and tells you the truth about how you went. More series are on the way.</p></div>
 {faq_block()}</div></div></section>'''
     return page("Fifty Two Press | Fifty-two week diaries with a stress score",
