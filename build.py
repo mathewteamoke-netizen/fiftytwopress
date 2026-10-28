@@ -5,7 +5,7 @@ import os, html
 OUT = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://fiftytwopress.com"
 EMAIL = "hello@fiftytwopress.com"
-TAG = ""  # Amazon Associates tracking id, e.g. fiftytwopress-22
+TAG = "fiftytwopress-22"  # Amazon Associates tracking id, e.g. fiftytwopress-22
 AMZ = "https://www.amazon.com.au/dp/"
 
 TIERS = [
