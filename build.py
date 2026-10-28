@@ -69,10 +69,10 @@ def price_html(t, size=None):
 def buy(t, cls, label="Order on Amazon"):
     return f'<a href="{amz(t)}" class="{cls} buy" data-asin="{t["asin"]}" rel="sponsored noopener" target="_blank">{label}</a>'
 def store_select(big=False):
-    opts = "".join(f'<option value="{x["code"]}">{x["label"]}</option>' for x in STORES)
-    if big:
-        return f'<div class="store-bar"><label><span class="eyebrow">Choose your Amazon store</span><select class="store-sync" aria-label="Choose your Amazon store">{opts}</select></label><span class="muted">Prices and Order buttons change to match. You check out on that Amazon store.</span></div>'
-    return f'<label class="store"><span>Your Amazon store</span><select id="store" class="store-sync" aria-label="Choose your Amazon store">{opts}</select></label>'
+    items = "".join(f'<li role="option" data-code="{x["code"]}" aria-selected="false"><img src="/assets/flags/{x["code"].lower()}.svg" alt="" width="20" height="15"><span>{x["label"]}</span><small>{x["domain"]}</small></li>' for x in STORES)
+    cls = "storepick big" if big else "storepick"
+    label = '<span class="eyebrow">Your Amazon store</span>' if big else '<span class="sp-label">Amazon store</span>'
+    return f'''<div class="{cls}">{label}<button type="button" class="sp-btn" aria-haspopup="listbox" aria-expanded="false"><img class="sp-flag" src="/assets/flags/au.svg" alt="" width="20" height="15"><span class="sp-name">Australia</span><svg width="12" height="8" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><ul class="sp-list" role="listbox" aria-label="Choose your Amazon store" hidden>{items}</ul></div>'''
 def store_json():
     return json.dumps({"stores": STORES, "prices": PRICES}, separators=(",", ":"))
 
@@ -85,7 +85,7 @@ def header():
     return f'''<header class="hdr"><div class="wrap">
 <a href="/" aria-label="Fifty Two Press home">{lockup()}</a>
 <nav class="nav" aria-label="Main"><a href="/#series">The series</a><a href="/#inside">Inside</a><a href="/#score">Stress score</a><a href="/#about">About</a></nav>
-{store_select()}<a href="/#series" class="cta-shop">Shop the series</a>
+<a href="/#series" class="cta-shop">Shop the series</a>{store_select()}
 </div></header>'''
 
 def footer():
@@ -142,7 +142,7 @@ def home():
 <div class="rv" style="max-width:720px"><span class="eyebrow">The Back to Green Series</span><h2 id="series-h" class="h2">Four tiers. One idea: get back to green.</h2>
 <p class="lede">Same book inside. The tier is about your job, not what you get.</p>
 <div class="why-amazon"><strong>Why you order on Amazon.</strong> {E(WHY_AMAZON)}</div></div>
-              {store_select(big=True)}
+              <div class="store-bar rv">{store_select(big=True)}<p class="muted">Prices and Order buttons change to match the store you choose. You check out there, with that store's delivery and returns.</p></div>
 <div class="grid g3" style="margin-top:48px">{cards}</div></div></section>
 
 <section id="inside" class="sec dark" aria-labelledby="inside-h"><div class="wrap">
@@ -164,6 +164,7 @@ def home():
 <figure class="photo rv"><img src="/assets/photos/stack.jpg" alt="The four Back to Green diaries stacked on a desk" loading="lazy"></figure>
 <div class="rv"><span class="eyebrow">About the press</span><h2 id="about-h" class="h2">Made by someone who needed one.</h2>
 <p class="lede">Fifty Two Press started on a construction site in Queensland. The planners on the shelf were corporate and joyless, or pretty and useless. None of them asked the only question that mattered: how are you actually travelling? So we made one that does.</p>
+<div class="author"><span class="eyebrow">About the author</span><h3 class="h3">Mr Capital T</h3><p>Mr Capital T is the pen name of the founder of Fifty Two Press. He spent twenty years running crews on mine sites and construction projects across Australia, two weeks on, one week off, and wrote the Back to Green Series for the people who do that kind of work: a diary that plans the week, gives you ten minutes with a pencil, and tells you the truth about how you went. More series are on the way.</p></div>
 {faq_block()}</div></div></section>'''
     return page("Fifty Two Press | Fifty-two week diaries with a stress score",
                 "Fifty-two week diaries with a colouring panel and a green-to-red stress score. The Back to Green Series: four tiers, printed and shipped by Amazon.",
@@ -183,7 +184,7 @@ def diary(t):
 <figure><img src="/assets/photos/spread.jpg" alt="The weekly planning spread" loading="lazy"></figure></div>
 <div style="display:flex;flex-direction:column;gap:18px">
 <span class="badge">Tier {t['n']} &middot; {t['colour']} &middot; The Back to Green Series</span>
-<h1 class="h1" style="font-size:clamp(36px,4.6vw,58px)">{E(t['title'])}</h1>
+<h1 class="h1" style="font-size:clamp(36px,4.6vw,58px)">{E(t['title'])}</h1><span class="byline">by Mr Capital T &middot; Fifty Two Press</span>
 <p class="lede" style="margin-top:0">{E(t['who'])}</p>
 <div style="font-size:30px">{price_html(t,30)}</div>
 <div style="display:flex;gap:10px;flex-wrap:wrap">{buy(t,"cta-amazon-big")}</div>

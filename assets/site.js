@@ -33,8 +33,9 @@
 (function () {
   var cfg = document.getElementById("store-config"); if (!cfg) return;
   cfg = JSON.parse(cfg.textContent);
-  var sel = document.getElementById("store"); if (!sel) return;
   var byCode = {}; cfg.stores.forEach(function (s) { byCode[s.code] = s; });
+  var picks = Array.prototype.slice.call(document.querySelectorAll(".storepick"));
+  if (!picks.length) return;
   function guess() {
     try { var saved = localStorage.getItem("ftp-store"); if (saved && byCode[saved]) return saved; } catch (e) {}
     var langs = (navigator.languages || [navigator.language || ""]);
@@ -50,20 +51,35 @@
   function apply(code) {
     var s = byCode[code] || byCode.AU;
     document.querySelectorAll("a.buy").forEach(function (a) {
-      var asin = a.getAttribute("data-asin");
-      a.href = "https://www." + s.domain + "/dp/" + asin + (s.tag ? "?tag=" + s.tag : "");
+      a.href = "https://www." + s.domain + "/dp/" + a.getAttribute("data-asin") + (s.tag ? "?tag=" + s.tag : "");
     });
     document.querySelectorAll("[data-price]").forEach(function (el) {
       var p = (cfg.prices[el.getAttribute("data-price")] || {})[code];
-      el.innerHTML = p ? p + '<small>' + s.cur + '</small>' : "See price on Amazon";
+      el.innerHTML = p ? p + "<small>" + s.cur + "</small>" : "See price on Amazon";
     });
     document.querySelectorAll("[data-storename]").forEach(function (el) { el.textContent = s.domain; });
-    sel.value = code;
+    picks.forEach(function (pk) {
+      pk.querySelector(".sp-flag").src = "/assets/flags/" + code.toLowerCase() + ".svg";
+      pk.querySelector(".sp-name").textContent = s.label;
+      pk.querySelectorAll("li").forEach(function (li) { li.setAttribute("aria-selected", li.getAttribute("data-code") === code ? "true" : "false"); });
+    });
     try { localStorage.setItem("ftp-store", code); } catch (e) {}
   }
-  var all = document.querySelectorAll("select.store-sync");
-  all.forEach(function (x) { x.addEventListener("change", function () { apply(x.value); }); });
-  function applyAll(code) { apply(code); all.forEach(function (x) { x.value = code; }); }
-  all.forEach(function (x) { x.addEventListener("change", function () { applyAll(x.value); }); });
-  applyAll(guess());
+  function close(pk) { pk.querySelector(".sp-list").hidden = true; pk.querySelector(".sp-btn").setAttribute("aria-expanded", "false"); }
+  picks.forEach(function (pk) {
+    var btn = pk.querySelector(".sp-btn"), list = pk.querySelector(".sp-list");
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = list.hidden; picks.forEach(close);
+      if (open) { list.hidden = false; btn.setAttribute("aria-expanded", "true"); }
+    });
+    list.querySelectorAll("li").forEach(function (li) {
+      li.tabIndex = 0;
+      li.addEventListener("click", function () { apply(li.getAttribute("data-code")); close(pk); });
+      li.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); apply(li.getAttribute("data-code")); close(pk); btn.focus(); } });
+    });
+    pk.addEventListener("keydown", function (e) { if (e.key === "Escape") { close(pk); btn.focus(); } });
+  });
+  document.addEventListener("click", function () { picks.forEach(close); });
+  apply(guess());
 })();
