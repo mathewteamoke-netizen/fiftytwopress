@@ -30,7 +30,7 @@ TIERS = [
          who="For the person carrying the whole operation.", price="$39.99",
          asin="B0HNHPQP2W",
          why="You answer for everything and everyone. This one gives the week a shape before the week gives you one.",
-         blurb="A 52-week planner built for people who carry the whole operation. Each week gives you a full planning spread, a colouring panel to switch your head off for ten minutes, and a green-to-red stress score so you can see the drift before it becomes a problem."),
+         blurb="A 52-week planner built for people who carry the whole operation. Each week gives you a planning spread for the three priorities that will make the biggest impact, a colouring panel to switch your head off for ten minutes, and a green-to-red stress score so you can see your mental load before it becomes a problem."),
     dict(slug="manager", short="Manager", n=2, colour="Navy", cover="#0B1A3A", title="The Manager's Diary",
          who="For running a department, a project or a crew of leaders.", price="$34.99",
          asin="B0HNFW9PZN",
@@ -55,7 +55,8 @@ FAQS = [
     ("Why do I order on Amazon?", WHY_AMAZON + " We earn a small commission on top of our royalty, at no cost to you."),
     ("Which tier is mine?", "The book inside is the same in all four. Pick by the job. Executive: you carry the whole operation. Manager: you run a department or project. Team Leader: your first step into leading people. Professional: serious work, no team to hide behind."),
     ("Is it dated?", "No. All 52 weeks are undated, so you can start any Monday and skip nothing if you take a week off."),
-    ("Do I need to be good at colouring?", "No. The panels are simple line work. Ten minutes with any pen is the point, not the result."),
+    ("Do I need to be good at colouring?", "No. The panels are simple line work. Ten minutes with any pen is the point, not the result. The research on colouring and anxiety used ordinary pencils and structured patterns, which is what these are."),
+    ("Does colouring really reduce stress?", "Studies with adults have found that short sessions of structured colouring lower reported anxiety, and that a week of daily colouring reduced anxiety and depressive symptoms. It is not a treatment, but it is a reliable way to bring the dial down at the end of a hard day."),
     ("Where does it ship?", "Australia, the United States, Canada, the United Kingdom, Europe and Japan. Pick your Amazon store at the top of the page and every Order button goes to that store. Australian orders of the hardcover are shipped from Amazon's European print facility, so allow around two weeks."),
 ]
 
@@ -83,7 +84,7 @@ def lockup(light=False, size=40):
 def header():
     return f'''<header class="hdr"><div class="wrap">
 <a href="/" aria-label="Fifty Two Press home">{lockup()}</a>
-<nav class="nav" aria-label="Main"><a href="/#series">The series</a><a href="/#inside">Inside</a><a href="/#score">Stress score</a><a href="/#about">About</a></nav>
+<nav class="nav" aria-label="Main"><a href="/#series">The series</a><a href="/#inside">Inside</a><a href="/#science">The science</a><a href="/#score">Stress score</a><a href="/#about">About</a></nav>
 <a href="/#series" class="cta-shop">Shop the series</a>{store_select()}
 </div></header>'''
 
@@ -148,18 +149,30 @@ def home():
 <div class="grid g3" style="margin-top:48px">{cards}</div></div></section>
 
 <section id="inside" class="sec dark" aria-labelledby="inside-h"><div class="wrap">
-<div class="rv" style="max-width:720px"><span class="eyebrow">Inside every diary</span><h2 id="inside-h" class="h2">Plan it. Colour it. Score it.</h2><p class="lede">124 pages. 52 undated weeks. Four quarterly check-ins.</p></div>
+<div class="rv" style="max-width:720px"><span class="eyebrow">Inside every diary</span><h2 id="inside-h" class="h2">Plan it. Colour it. Score it.</h2><p class="lede">A weekly system for a clear head: the few priorities that matter most, ten minutes of colouring to bring your stress level down, and an honest score so you can see your mental load before it tips. 124 pages. 52 undated weeks. Four quarterly check-ins.</p></div>
 <div class="bento rv" style="margin-top:40px">
-<figure class="wide"><img src="/assets/photos/spread.jpg" alt="Weekly planning spread with seven days, three priorities and a stress score strip" loading="lazy"><figcaption>1 &middot; Plan the week: seven days, three priorities</figcaption></figure>
+<figure class="wide"><img src="/assets/photos/spread.jpg" alt="Weekly planning spread with seven days, three priorities and a stress score strip" loading="lazy"><figcaption>1 &middot; Plan: three big-hitter priorities, one day at a time</figcaption></figure>
 <figure class="tall"><img src="/assets/photos/flat-executive.jpg" alt="The Executive Diary on a desk with a pencil" loading="lazy"><figcaption>Desk size, lies flat</figcaption></figure>
-<figure><img src="/assets/photos/panel.jpg" alt="Art deco colouring panel partly coloured in green pencil" loading="lazy"><figcaption>2 &middot; Colour: ten minutes, no screen</figcaption></figure>
-<figure><img src="/assets/photos/quarter.jpg" alt="Quarterly review page with thirteen weeks of green to red scores" loading="lazy"><figcaption>3 &middot; Score: one colour a day</figcaption></figure>
+<figure><img src="/assets/photos/panel.jpg" alt="Art deco colouring panel partly coloured in green pencil" loading="lazy"><figcaption>2 &middot; Colour: ten minutes that lower the stress dial</figcaption></figure>
+<figure><img src="/assets/photos/quarter.jpg" alt="Quarterly review page with thirteen weeks of green to red scores" loading="lazy"><figcaption>3 &middot; Score: track your stress level, green to red</figcaption></figure>
 </div></div></section>
 
+
+<section id="science" class="sec" aria-labelledby="sci-h"><div class="wrap">
+<div class="rv" style="max-width:760px"><span class="eyebrow">The science</span><h2 id="sci-h" class="h2">Why it works.</h2>
+<p class="lede">None of this is a gimmick. Each part of the diary leans on published research into stress, attention and mental health.</p></div>
+<div class="grid g3" style="margin-top:40px">
+<div class="card rv"><span class="eyebrow">Colouring and stress</span><h3 class="h3">Ten minutes of colouring lowers anxiety.</h3><p>In a controlled study, adults who coloured a structured pattern for a short session reported significantly lower anxiety than those who drew freely (Curry and Kasser, 2005). A later trial found that a week of daily colouring reduced symptoms of anxiety and depression in adults (Flett et al., 2017). The panels in every diary are built for exactly that: structured, repetitive, no screen.</p></div>
+<div class="card rv"><span class="eyebrow">Priorities and mental load</span><h3 class="h3">Write the plan, quiet the mind.</h3><p>Unfinished tasks keep nagging at your attention, a pattern psychologists call the Zeigarnik effect. Research shows that simply writing a concrete plan for those tasks switches the nagging off, even before you do them (Masicampo and Baumeister, 2011). When the week is too big, the spread asks for three big hitters, the priorities with the most impact, and one day at a time.</p></div>
+<div class="card rv"><span class="eyebrow">Tracking stress</span><h3 class="h3">You can only manage what you can see.</h3><p>Putting feelings into words and onto paper is linked with better wellbeing and fewer intrusive thoughts (Pennebaker and Beall, 1986, and decades of expressive-writing studies since). The green-to-red score takes two seconds a day and gives you thirteen weeks of data at every quarterly check-in: your stress levels as a pattern, not a feeling.</p></div>
+</div>
+<p class="muted rv" style="margin-top:24px;font-size:14px;max-width:760px">Fifty Two Press diaries are a planning and wellbeing tool, not a medical treatment. If your stress or mental health is affecting your life, talk to a doctor or a qualified professional.</p>
+</div></section>
+
 <section id="score" class="sec" aria-labelledby="score-h"><div class="wrap split">
-<div class="rv"><span class="eyebrow">The stress score</span><h2 id="score-h" class="h2">How was the week, really?</h2>
-<p class="lede">Pick a colour. This strip sits at the foot of every weekly spread. Two seconds, and the most honest thing in the book.</p>
-<p class="lede">Thirteen weeks later the quarterly check-in turns those colours into a pattern you can plan against.</p></div>
+<div class="rv"><span class="eyebrow">The stress score</span><h2 id="score-h" class="h2">What is your stress level, really?</h2>
+<p class="lede">Pick a colour. This strip sits at the foot of every weekly spread. Two seconds a day, and the most honest reading of your mental health in the book.</p>
+<p class="lede">Thirteen weeks later the quarterly check-in turns those colours into a pattern you can plan against: what kept you in the green, what pushed you into the red, what changes next.</p></div>
 <div class="rv">{score_box()}</div></div></section>
 
 <section id="about" class="sec" aria-labelledby="about-h" style="background:var(--c-soft)"><div class="wrap split">
