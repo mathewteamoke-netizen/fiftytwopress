@@ -173,3 +173,9 @@ body{background:var(--c-bg)}
 .bento figcaption{background:rgba(12,13,15,.82)}
 .author{background:var(--c-surface)}
 hr.rule{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--c-gold),transparent);margin:0 auto;max-width:320px}
+.hero{min-height:min(74vh,680px)}
+.hero>img{object-position:88% 55%}
+.hero-panel{max-width:540px;padding:34px 38px}
+.hero-panel .h1{font-size:clamp(36px,4.4vw,56px)}
+.hero-panel .lede{font-size:16px;line-height:1.6}
+@media (min-width:1300px){.hero .wrap{padding-left:40px}}

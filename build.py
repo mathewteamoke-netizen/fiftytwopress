@@ -10,7 +10,7 @@ AMZ = "https://www.amazon.com.au/dp/"
 # Amazon stores where KDP hardcovers are sold. tag = Associates id for that store (only AU joined so far).
 STORES = [
     dict(code="AU", label="Australia", domain="amazon.com.au", tag="fiftytwopress-22", cur="AUD"),
-    dict(code="US", label="United States", domain="amazon.com", tag="", cur="USD"),
+    dict(code="US", label="United States", domain="amazon.com", tag="fiftytwopress-20", cur="USD"),
     dict(code="GB", label="United Kingdom", domain="amazon.co.uk", tag="", cur="GBP"),
     dict(code="CA", label="Canada", domain="amazon.ca", tag="", cur="CAD"),
     dict(code="DE", label="Germany", domain="amazon.de", tag="", cur="EUR"),
