@@ -55,7 +55,7 @@
     });
     document.querySelectorAll("[data-price]").forEach(function (el) {
       var p = (cfg.prices[el.getAttribute("data-price")] || {})[code];
-      el.innerHTML = p ? p + "<small>" + s.cur + "</small>" : "See price on Amazon";
+      el.innerHTML = p ? p + "<small>" + s.cur + "</small>" : "Price on Amazon";
     });
     document.querySelectorAll("[data-storename]").forEach(function (el) { el.textContent = s.domain; });
     picks.forEach(function (pk) {
@@ -82,4 +82,17 @@
   });
   document.addEventListener("click", function () { picks.forEach(close); });
   apply(guess());
+})();
+
+(function () {
+  var hdr = document.querySelector(".hdr"); if (!hdr) return;
+  var links = Array.prototype.slice.call(document.querySelectorAll(".nav a[href*='#']"));
+  var secs = links.map(function (a) { var id = a.getAttribute("href").split("#")[1]; return document.getElementById(id); }).filter(Boolean);
+  function onScroll() {
+    hdr.classList.toggle("is-scrolled", window.scrollY > 8);
+    var y = window.scrollY + 120, cur = null;
+    secs.forEach(function (s) { if (s.offsetTop <= y) cur = s.id; });
+    links.forEach(function (a) { a.classList.toggle("is-active", cur && a.getAttribute("href").endsWith("#" + cur)); });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
 })();

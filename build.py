@@ -65,7 +65,7 @@ def amz(t):
     return AMZ + t['asin'] + (f"?tag={TAG}" if TAG else "")
 def price_html(t, size=None):
     st = f' style="font-size:{size}px"' if size else ""
-    return f'<span class="price" data-price="{t["slug"]}"{st}>See price on Amazon</span>'
+    return f'<span class="price" data-price="{t["slug"]}"{st}>Price on Amazon</span>'
 def buy(t, cls, label="Order on Amazon"):
     return f'<a href="{amz(t)}" class="{cls} buy" data-asin="{t["asin"]}" rel="sponsored noopener" target="_blank">{label}</a>'
 def store_select(big=False):
@@ -92,7 +92,7 @@ def footer():
     return f'''<footer class="footer"><div class="wrap grid g4" style="padding-top:64px;padding-bottom:40px;gap:32px">
 <div style="display:flex;flex-direction:column;gap:14px">{lockup(light=True)}<span>Hardcover editions, printed to order and shipped by Amazon worldwide.</span></div>
 <div style="display:flex;flex-direction:column;gap:10px"><strong>Series</strong><a href="/#series">The Back to Green Series</a><span>More series coming</span></div>
-<div style="display:flex;flex-direction:column;gap:10px"><strong>Help</strong><a href="/#faq">How to order</a><a href="/#faq">Which tier is mine?</a><a href="mailto:{EMAIL}">Contact</a></div>
+<div style="display:flex;flex-direction:column;gap:10px"><strong>Help</strong><a href="/#faq">How to order</a><a href="/#faq">Which tier is mine?</a><a href="mailto:{EMAIL}">Contact</a><a href="https://www.instagram.com/fiftytwopress" rel="noopener" target="_blank">Instagram</a><a href="https://www.facebook.com/profile.php?id=61587081400000" rel="noopener" target="_blank">Facebook</a></div>
 <div style="display:flex;flex-direction:column;gap:10px"><strong>By invitation</strong><span>First word on new editions, before they are listed.</span>
 <form action="mailto:{EMAIL}" method="get" style="display:flex;gap:8px;flex-wrap:wrap"><label for="news-email" class="sr-only">Email address</label><input id="news-email" name="subject" type="email" class="input" placeholder="you@example.com" required style="flex:1 1 160px;min-height:42px"><button type="submit" class="cta-notify" style="min-height:42px;padding:0 18px">Request</button></form></div>
 </div><div class="wrap" style="padding-bottom:32px;font-size:13px;opacity:.7">&copy; 2026 Fifty Two Press. As an Amazon Associate we earn from qualifying purchases.</div></footer>'''
@@ -112,7 +112,7 @@ def score_box():
 <div aria-live="polite" class="verdict" data-verdict>Amber. Watch the drift.</div><p class="muted" data-advice>Pick one thing to drop next week before it picks itself.</p></div>'''
 
 def faq_block():
-    return '<div class="faq" id="faq" style="margin:28px 0 0">' + "".join(f"<details><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in FAQS) + "</div>"
+    return '<div class="faq rv">' + "".join(f"<details><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in FAQS) + "</div>"
 
 def page(title, desc, path, body, has_buybar=False):
     canon = SITE + path
@@ -123,8 +123,10 @@ def page(title, desc, path, body, has_buybar=False):
 <link rel="icon" href="/assets/brand/favicon.png"><link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#121315"><meta name="color-scheme" content="dark">
+<link rel="preload" as="image" href="/assets/photos/hero.jpg" fetchpriority="high">
 <link rel="stylesheet" href="/assets/site.css"></head>
-<body><div class="ftp{' has-buybar' if has_buybar else ''}">{header()}<main>{body}</main>{footer()}</div><script id="store-config" type="application/json">{store_json()}</script><script src="/assets/site.js" defer></script></body></html>'''
+<body><a class="skip" href="#main">Skip to content</a><div class="ftp{' has-buybar' if has_buybar else ''}">{header()}<main id="main">{body}</main>{footer()}</div><script id="store-config" type="application/json">{store_json()}</script><script src="/assets/site.js" defer></script></body></html>'''
 
 def home():
     ex, rest = TIERS[0], TIERS[1:]
@@ -136,16 +138,15 @@ def home():
 <span class="badge">Tier {t['n']} &middot; {t['colour']}</span><h3 class="h3">{E(t['title'])}</h3><p class="who">{E(t['who'])}</p>
 <div class="row">{price_html(t)}{buy(t,"cta-amazon")}</div><span class="ship">Printed and shipped by Amazon &middot; <span data-storename>amazon.com.au</span></span></article>'''
     body = f'''
-<section class="hero" aria-labelledby="hero-h"><img src="/assets/photos/hero.jpg" alt="" fetchpriority="high"><div class="wrap"><div class="hero-panel">
+<section class="hero" aria-labelledby="hero-h"><img src="/assets/photos/hero.jpg" width="1800" height="763" alt="The four Back to Green diaries stacked on an oak desk by a window" fetchpriority="high" decoding="async"><div class="wrap"><div class="hero-panel">
 <span class="eyebrow">Fifty Two Press &middot; Hardcover editions</span><h1 id="hero-h" class="h1">Fifty-two weeks. One honest account of a year.</h1>
 <p class="lede hero-copy">A diary is the one friend who hears the whole week, the wins and the losses, and keeps every word to itself. It waits up for you. It doesn't mind the crossed-out days or the ones you skipped entirely. It takes whatever you bring it: plans, regrets, victories, and the honest colour of how things really went. It holds it all without judgement. Fifty-two weeks of that, and you've written something nobody else could have: a true account of a year, kept by the only person who was there for every moment of it.</p>
 <div class="hero-ctas"><a href="#series" class="cta-series">Shop the series</a><a href="#score" class="cta-score">Try the stress score</a></div></div></div></section>
 
 <section id="series" class="sec" aria-labelledby="series-h"><div class="wrap">
 <div class="rv" style="max-width:720px"><span class="eyebrow">The Back to Green Series</span><h2 id="series-h" class="h2">Four tiers. One idea: get back to green.</h2>
-<p class="lede">Hardcover, full-colour, printed to order. Four tiers for four kinds of responsibility; the same system inside every one.</p>
-<div class="why-amazon"><strong>Why you order on Amazon.</strong> {E(WHY_AMAZON)}</div></div>
-              <div class="store-bar rv">{store_select(big=True)}<p class="muted">Prices and Order buttons change to match the store you choose. You check out there, with that store's delivery and returns.</p></div>
+<p class="lede">Hardcover, full-colour, printed to order. Four tiers for four kinds of responsibility; the same system inside every one.</p></div>
+<div class="order-bar rv">{store_select(big=True)}<p>Every edition is printed to order by Amazon and shipped from the facility nearest you. Choose your store; prices and Order buttons follow, and you check out on Amazon with its delivery and returns.</p></div>
 <div class="grid g3" style="margin-top:48px">{cards}</div></div></section>
 
 <section id="inside" class="sec dark" aria-labelledby="inside-h"><div class="wrap">
@@ -162,9 +163,9 @@ def home():
 <div class="rv" style="max-width:760px"><span class="eyebrow">The science</span><h2 id="sci-h" class="h2">Why it works.</h2>
 <p class="lede">None of this is a gimmick. Each part of the diary leans on published research into stress, attention and mental health.</p></div>
 <div class="grid g3" style="margin-top:40px">
-<div class="card rv"><span class="eyebrow">Colouring and stress</span><h3 class="h3">Ten minutes of colouring lowers anxiety.</h3><p>In a controlled study, adults who coloured a structured pattern for a short session reported significantly lower anxiety than those who drew freely (Curry and Kasser, 2005). A later trial found that a week of daily colouring reduced symptoms of anxiety and depression in adults (Flett et al., 2017). The panels in every diary are built for exactly that: structured, repetitive, no screen.</p></div>
-<div class="card rv"><span class="eyebrow">Priorities and mental load</span><h3 class="h3">Write the plan, quiet the mind.</h3><p>Unfinished tasks keep nagging at your attention, a pattern psychologists call the Zeigarnik effect. Research shows that simply writing a concrete plan for those tasks switches the nagging off, even before you do them (Masicampo and Baumeister, 2011). When the week is too big, the spread asks for three big hitters, the priorities with the most impact, and one day at a time.</p></div>
-<div class="card rv"><span class="eyebrow">Tracking stress</span><h3 class="h3">You can only manage what you can see.</h3><p>Putting feelings into words and onto paper is linked with better wellbeing and fewer intrusive thoughts (Pennebaker and Beall, 1986, and decades of expressive-writing studies since). The green-to-red score takes two seconds a day and gives you thirteen weeks of data at every quarterly check-in: your stress levels as a pattern, not a feeling.</p></div>
+<div class="card rv"><span class="num">1</span><span class="eyebrow">Colouring and stress</span><h3 class="h3">Ten minutes of colouring lowers anxiety.</h3><p>In a controlled study, adults who coloured a structured pattern for a short session reported significantly lower anxiety than those who drew freely (Curry and Kasser, 2005). A later trial found that a week of daily colouring reduced symptoms of anxiety and depression in adults (Flett et al., 2017). The panels in every diary are built for exactly that: structured, repetitive, no screen.</p></div>
+<div class="card rv"><span class="num">2</span><span class="eyebrow">Priorities and mental load</span><h3 class="h3">Write the plan, quiet the mind.</h3><p>Unfinished tasks keep nagging at your attention, a pattern psychologists call the Zeigarnik effect. Research shows that simply writing a concrete plan for those tasks switches the nagging off, even before you do them (Masicampo and Baumeister, 2011). When the week is too big, the spread asks for three big hitters, the priorities with the most impact, and one day at a time.</p></div>
+<div class="card rv"><span class="num">3</span><span class="eyebrow">Tracking stress</span><h3 class="h3">You can only manage what you can see.</h3><p>Putting feelings into words and onto paper is linked with better wellbeing and fewer intrusive thoughts (Pennebaker and Beall, 1986, and decades of expressive-writing studies since). The green-to-red score takes two seconds a day and gives you thirteen weeks of data at every quarterly check-in: your stress levels as a pattern, not a feeling.</p></div>
 </div>
 <p class="muted rv" style="margin-top:24px;font-size:14px;max-width:760px">Fifty Two Press diaries are a planning and wellbeing tool, not a medical treatment. If your stress or mental health is affecting your life, talk to a doctor or a qualified professional.</p>
 </div></section>
@@ -176,11 +177,15 @@ def home():
 <div class="rv">{score_box()}</div></div></section>
 
 <section id="about" class="sec" aria-labelledby="about-h" style="background:var(--c-soft)"><div class="wrap split">
-<figure class="photo rv"><img src="/assets/photos/stack.jpg" alt="The four Back to Green diaries stacked on a desk" loading="lazy"></figure>
+<figure class="photo rv"><img src="/assets/photos/stack.jpg" width="1400" height="1045" alt="The four Back to Green diaries stacked on a desk" decoding="async"></figure>
 <div class="rv"><span class="eyebrow">About the press</span><h2 id="about-h" class="h2">Made by someone who needed one.</h2>
 <p class="lede">Fifty Two Press started on a construction site. The planners on the shelf were corporate and joyless, or pretty and useless. None of them asked the only question that mattered: how are you actually travelling? So we made one that does.</p>
 <div class="author"><span class="eyebrow">About the author</span><h3 class="h3">Mr Capital T</h3><p>Mr Capital T is the pen name of the founder of Fifty Two Press. He wrote the Back to Green Series for people whose weeks run flat out: a diary that plans the week, gives you ten minutes with a pencil, and tells you the truth about how you went. More series are on the way.</p></div>
-{faq_block()}</div></div></section>'''
+</div></div></section>
+
+<section id="faq" class="sec" aria-labelledby="faq-h"><div class="wrap">
+<div class="rv" style="max-width:720px"><span class="eyebrow">Questions</span><h2 id="faq-h" class="h2">Before you order.</h2></div>
+{faq_block()}</div></section>'''
     return page("Fifty Two Press | Fifty-two weeks. One honest account of a year.",
                 "Hardcover fifty-two week diaries with a colouring panel and a green-to-red stress score. The Back to Green Series, printed to order and shipped by Amazon worldwide.",
                 "/", body)
@@ -193,11 +198,11 @@ def diary(t):
     body = f'''
 <section class="sec" style="padding-top:32px"><div class="wrap">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/#series">The Back to Green Series</a><span aria-hidden="true">/</span><span aria-current="page">{E(t['title'])}</span></nav>
-<div class="split" style="margin-top:28px;align-items:flex-start">
+<div class="split pdp" style="margin-top:28px;align-items:flex-start">
 <div class="gallery"><figure><img src="/assets/photos/flat-{t['slug']}.jpg" alt="{E(t['title'])} on a desk with a pencil"></figure>
 <figure><img src="/assets/photos/stack.jpg" alt="The four Back to Green diaries stacked by a window" loading="lazy"></figure>
 <figure><img src="/assets/photos/spread.jpg" alt="The weekly planning spread" loading="lazy"></figure></div>
-<div style="display:flex;flex-direction:column;gap:18px">
+<div class="buycol" style="display:flex;flex-direction:column;gap:18px">
 <span class="badge">Tier {t['n']} &middot; {t['colour']} &middot; The Back to Green Series</span>
 <h1 class="h1" style="font-size:clamp(36px,4.6vw,58px)">{E(t['title'])}</h1><span class="byline">by Mr Capital T &middot; Fifty Two Press</span>
 <p class="lede" style="margin-top:0">{E(t['who'])}</p>
