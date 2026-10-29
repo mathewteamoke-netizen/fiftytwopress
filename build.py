@@ -137,8 +137,7 @@ def home():
 <div class="row">{price_html(t)}{buy(t,"cta-amazon")}</div><span class="ship">Printed and shipped by Amazon &middot; <span data-storename>amazon.com.au</span></span></article>'''
     body = f'''
 <section class="hero" aria-labelledby="hero-h"><img src="/assets/photos/hero.jpg" alt="" fetchpriority="high"><div class="wrap"><div class="hero-panel">
-<span class="eyebrow">Fifty-two weeks. One honest account of a year.</span><h1 id="hero-h" class="h1">Plan the week. Colour the day. Score it green to red.</h1>
-<p class="hero-sub">A planner for the week. A pencil for the day. A score for the truth.</p>
+<span class="eyebrow">Fifty Two Press &middot; Hardcover editions</span><h1 id="hero-h" class="h1">Fifty-two weeks. One honest account of a year.</h1>
 <p class="lede hero-copy">A diary is the one friend who hears the whole week, the wins and the losses, and keeps every word to itself. It waits up for you. It doesn't mind the crossed-out days or the ones you skipped entirely. It takes whatever you bring it: plans, regrets, victories, and the honest colour of how things really went. It holds it all without judgement. Fifty-two weeks of that, and you've written something nobody else could have: a true account of a year, kept by the only person who was there for every moment of it.</p>
 <div class="hero-ctas"><a href="#series" class="cta-series">Shop the series</a><a href="#score" class="cta-score">Try the stress score</a></div></div></div></section>
 
@@ -182,7 +181,7 @@ def home():
 <p class="lede">Fifty Two Press started on a construction site. The planners on the shelf were corporate and joyless, or pretty and useless. None of them asked the only question that mattered: how are you actually travelling? So we made one that does.</p>
 <div class="author"><span class="eyebrow">About the author</span><h3 class="h3">Mr Capital T</h3><p>Mr Capital T is the pen name of the founder of Fifty Two Press. He wrote the Back to Green Series for people whose weeks run flat out: a diary that plans the week, gives you ten minutes with a pencil, and tells you the truth about how you went. More series are on the way.</p></div>
 {faq_block()}</div></div></section>'''
-    return page("Fifty Two Press | Plan the week. Colour the day. Score it green to red.",
+    return page("Fifty Two Press | Fifty-two weeks. One honest account of a year.",
                 "Hardcover fifty-two week diaries with a colouring panel and a green-to-red stress score. The Back to Green Series, printed to order and shipped by Amazon worldwide.",
                 "/", body)
 
