@@ -96,6 +96,9 @@ def footer():
 <form action="mailto:{EMAIL}" method="get" style="display:flex;gap:8px;flex-wrap:wrap"><label for="news-email" class="sr-only">Email address</label><input id="news-email" name="subject" type="email" class="input" placeholder="you@example.com" required style="flex:1 1 160px;min-height:42px"><button type="submit" class="cta-notify" style="min-height:42px;padding:0 18px">Request</button></form></div>
 </div><div class="wrap" style="padding-bottom:32px;font-size:13px;opacity:.7">&copy; 2026 Fifty Two Press. As an Amazon Associate we earn from qualifying purchases.</div></footer>'''
 
+def shot(t, cls="cardphoto"):
+    return f'<img class="{cls}" src="/assets/photos/flat-{t["slug"]}.jpg" alt="{E(t["title"])}, {t["colour"].lower()} hardcover on a desk in window light" loading="lazy">'
+
 def book(t, depth=None):
     d = f"--d:{depth}px;" if depth else ""
     return f'''<div class="book" style="--cover:{t['cover']};{d}"><div class="bk"><img src="/assets/covers/{t['slug']}.jpg" alt="{E(t['title'])}, {t['colour'].lower()} cover" loading="lazy"><div class="spine" aria-hidden="true"><span>{E(t['title'])}</span></div><div class="back" aria-hidden="true"></div><div class="edge"></div><div class="top"></div><div class="bottom"></div></div><div class="sh"></div></div>'''
@@ -124,11 +127,11 @@ def page(title, desc, path, body, has_buybar=False):
 
 def home():
     ex, rest = TIERS[0], TIERS[1:]
-    cards = f'''<article class="tier feature rv"><a href="/diaries/{ex['slug']}/" aria-label="{E(ex['title'])}, see details">{book(ex, 28)}</a>
+    cards = f'''<article class="tier feature rv"><a href="/diaries/{ex['slug']}/" aria-label="{E(ex['title'])}, see details" class="photo-link">{shot(ex)}</a>
 <div class="body"><span class="badge">Tier 1 &middot; Emerald</span><h3 class="h3" style="font-size:34px">{E(ex['title'])}</h3><p class="muted">{E(ex['who'])} {E(ex['why'])}</p>
 <div class="row" style="border-top:0;padding-top:4px;justify-content:flex-start;gap:20px">{price_html(ex)}{buy(ex,"cta-amazon")}<a href="/diaries/{ex['slug']}/" class="cta-read">Details</a></div><span class="ship">Printed and shipped by Amazon &middot; <span data-storename>amazon.com.au</span></span></div></article>'''
     for t in rest:
-        cards += f'''<article class="tier rv"><a href="/diaries/{t['slug']}/" aria-label="{E(t['title'])}, see details">{book(t)}</a>
+        cards += f'''<article class="tier rv"><a href="/diaries/{t['slug']}/" aria-label="{E(t['title'])}, see details" class="photo-link">{shot(t)}</a>
 <span class="badge">Tier {t['n']} &middot; {t['colour']}</span><h3 class="h3">{E(t['title'])}</h3><p class="who">{E(t['who'])}</p>
 <div class="row">{price_html(t)}{buy(t,"cta-amazon")}</div><span class="ship">Printed and shipped by Amazon &middot; <span data-storename>amazon.com.au</span></span></article>'''
     body = f'''
@@ -171,7 +174,7 @@ def home():
 
 def diary(t):
     others = [o for o in TIERS if o["slug"] != t["slug"]]
-    oth = "".join(f'''<article class="tier rv"><a href="/diaries/{o['slug']}/" aria-label="{E(o['title'])}, see details">{book(o)}</a>
+    oth = "".join(f'''<article class="tier rv"><a href="/diaries/{o['slug']}/" aria-label="{E(o['title'])}, see details" class="photo-link">{shot(o)}</a>
 <span class="badge">Tier {o['n']} &middot; {o['colour']}</span><h3 class="h3">{E(o['title'])}</h3><p class="who">{E(o['who'])}</p>
 <div class="row">{price_html(o)}<a href="/diaries/{o['slug']}/" class="cta-read">Details</a></div></article>''' for o in others)
     body = f'''
@@ -179,7 +182,7 @@ def diary(t):
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/#series">The Back to Green Series</a><span aria-hidden="true">/</span><span aria-current="page">{E(t['title'])}</span></nav>
 <div class="split" style="margin-top:28px;align-items:flex-start">
 <div class="gallery"><figure><img src="/assets/photos/flat-{t['slug']}.jpg" alt="{E(t['title'])} on a desk with a pencil"></figure>
-<figure class="bookpad">{book(t, 28)}</figure>
+<figure><img src="/assets/photos/stack.jpg" alt="The four Back to Green diaries stacked by a window" loading="lazy"></figure>
 <figure><img src="/assets/photos/spread.jpg" alt="The weekly planning spread" loading="lazy"></figure></div>
 <div style="display:flex;flex-direction:column;gap:18px">
 <span class="badge">Tier {t['n']} &middot; {t['colour']} &middot; The Back to Green Series</span>

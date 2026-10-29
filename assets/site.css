@@ -179,3 +179,7 @@ hr.rule{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--c
 .hero-panel .h1{font-size:clamp(36px,4.4vw,56px)}
 .hero-panel .lede{font-size:16px;line-height:1.6}
 @media (min-width:1300px){.hero .wrap{padding-left:40px}}
+.tier>a.photo-link{padding:0;background:none;border-radius:var(--r-sm);overflow:hidden}
+.cardphoto{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;border-radius:var(--r-sm);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.tier:hover .cardphoto{transform:scale(1.03)}
+.tier.feature>a.photo-link{flex:0 0 40%}
