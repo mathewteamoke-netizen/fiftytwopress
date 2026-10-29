@@ -183,3 +183,13 @@ hr.rule{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--c
 .cardphoto{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;border-radius:var(--r-sm);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .tier:hover .cardphoto{transform:scale(1.03)}
 .tier.feature>a.photo-link{flex:0 0 40%}
+/* hero: split layout, text left on charcoal, photo right showing the full stack */
+.hero{display:grid;grid-template-columns:44% 56%;min-height:0;height:auto;background:#121315;overflow:hidden}
+.hero>img{position:relative;inset:auto;grid-column:2;width:100%;height:100%;min-height:560px;object-fit:cover;object-position:72% 50%;opacity:1}
+.hero .wrap{grid-column:1;grid-row:1;display:flex;align-items:center;padding:56px 40px 56px 64px;max-width:none;margin:0}
+.hero-panel{background:none;border:0;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0;max-width:520px}
+.hero-panel .h1{font-size:clamp(36px,3.6vw,54px)}
+.hero-panel .lede{font-size:16px}
+@media (max-width:1100px){.hero{grid-template-columns:50% 50%}.hero .wrap{padding:40px 24px 40px 32px}}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.hero>img{grid-column:1;grid-row:1;min-height:0;height:62vw;object-position:60% 50%}.hero .wrap{grid-column:1;grid-row:2;padding:28px 24px 36px}.hero-panel{max-width:none}}
+@media (min-width:1300px){.hero .wrap{padding-left:calc((100vw - 1200px)/2 + 24px)}}
