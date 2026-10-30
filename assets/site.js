@@ -56,11 +56,14 @@
     else { adKey = sessionStorage.getItem("ftp-ad") || ""; }
   } catch (e) {}
   // Per-ad Associates tracking ID: fiftytwopress-<adKey>-22 (AU) / -20 (US). Create them in Associates > Manage tracking IDs.
+  // Tracking IDs as they actually exist in Associates (US one was created with a typo).
+  var tagFix = { "-20": { founderbroll: "founderbrol" } };
   function tagFor(s) {
     if (!s.tag) return "";
     if (!adKey) return s.tag;
     var suffix = s.tag.slice(s.tag.lastIndexOf("-"));
-    return "fiftytwopress-" + adKey + suffix;
+    var key = (tagFix[suffix] && tagFix[suffix][adKey]) || adKey;
+    return "fiftytwopress-" + key + suffix;
   }
   function apply(code) {
     var s = byCode[code] || byCode.AU;
