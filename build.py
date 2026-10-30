@@ -5,7 +5,7 @@ import os, html, json
 OUT = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://fiftytwopress.com"
 EMAIL = "hello@fiftytwopress.com"
-PIXEL_ID = ""          # Meta Pixel ID from Events Manager; empty = no pixel
+PIXEL_ID = "2242132119684786"          # Meta Pixel ID from Events Manager; empty = no pixel
 SIGNUP_ACTION = ""     # Mailchimp/Beehiiv form action URL; empty = mailto fallback
 SIGNUP_FIELD = "EMAIL" # field name the list expects (Mailchimp: EMAIL)
 TAG = "fiftytwopress-22"  # Amazon Associates tracking id, e.g. fiftytwopress-22
