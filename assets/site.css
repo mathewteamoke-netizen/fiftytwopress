@@ -239,4 +239,4 @@ section[id]{scroll-margin-top:84px}
 .author-card{display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:start}
 .author-photo{width:120px;height:150px;object-fit:cover;object-position:50% 20%;border-radius:12px;border:1px solid var(--c-line)}
 @media (max-width:480px){.author-card{grid-template-columns:1fr}.author-photo{width:96px;height:120px}}
-#about .photo img{aspect-ratio:4/5;height:auto;object-position:50% 30%}
+#about .photo{aspect-ratio:4/5}#about .photo img{object-position:50% 30%}
