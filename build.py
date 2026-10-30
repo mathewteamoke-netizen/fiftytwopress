@@ -177,10 +177,10 @@ def home():
 <div class="rv">{score_box()}</div></div></section>
 
 <section id="about" class="sec" aria-labelledby="about-h" style="background:var(--c-soft)"><div class="wrap split">
-<figure class="photo rv"><img src="/assets/photos/stack.jpg" width="1400" height="1045" alt="The four Back to Green diaries stacked on a desk" decoding="async"></figure>
+<figure class="photo rv"><img src="/assets/photos/founder-ute.jpg" width="1080" height="1341" alt="The founder of Fifty Two Press at the end of a shift, holding the Team Leader's Diary" decoding="async"></figure>
 <div class="rv"><span class="eyebrow">About the press</span><h2 id="about-h" class="h2">Made by someone who needed one.</h2>
 <p class="lede">Fifty Two Press started on a construction site. The planners on the shelf were corporate and joyless, or pretty and useless. None of them asked the only question that mattered: how are you actually travelling? So we made one that does.</p>
-<div class="author"><span class="eyebrow">About the author</span><h3 class="h3">Mr Capital T</h3><p>Mr Capital T is the pen name of the founder of Fifty Two Press. He wrote the Back to Green Series for people whose weeks run flat out: a diary that plans the week, gives you ten minutes with a pencil, and tells you the truth about how you went. More series are on the way.</p></div>
+<div class="author author-card"><img class="author-photo" src="/assets/photos/author.jpg" width="1080" height="1341" alt="Mr Capital T" loading="lazy" decoding="async"><div><span class="eyebrow">About the author</span><h3 class="h3">Mr Capital T</h3><p>Mr Capital T is the pen name of the founder of Fifty Two Press. He wrote the Back to Green Series for people whose weeks run flat out: a diary that plans the week, gives you ten minutes with a pencil, and tells you the truth about how you went. More series are on the way.</p></div></div>
 </div></div></section>
 
 <section id="faq" class="sec" aria-labelledby="faq-h"><div class="wrap">
