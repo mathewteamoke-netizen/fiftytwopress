@@ -6,7 +6,7 @@ OUT = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://fiftytwopress.com"
 EMAIL = "hello@fiftytwopress.com"
 PIXEL_ID = "2242132119684786"          # Meta Pixel ID from Events Manager; empty = no pixel
-SIGNUP_ACTION = ""     # Mailchimp/Beehiiv form action URL; empty = mailto fallback
+SIGNUP_ACTION = "https://fiftytwopress.us20.list-manage.com/subscribe/post?u=a4008603987d48d43a3424541&id=0001148300&f_id=007166e0f0"     # Mailchimp/Beehiiv form action URL; empty = mailto fallback
 SIGNUP_FIELD = "EMAIL" # field name the list expects (Mailchimp: EMAIL)
 TAG = "fiftytwopress-22"  # Amazon Associates tracking id, e.g. fiftytwopress-22
 AMZ = "https://www.amazon.com.au/dp/"
@@ -105,7 +105,7 @@ def footer():
 <div style="display:flex;flex-direction:column;gap:10px"><strong>Series</strong><a href="/#series">The Back to Green Series</a><span>More series coming</span></div>
 <div style="display:flex;flex-direction:column;gap:10px"><strong>Help</strong><a href="/#faq">How to order</a><a href="/#faq">Which tier is mine?</a><a href="mailto:{EMAIL}">Contact</a><a href="https://www.instagram.com/fiftytwopress" rel="noopener" target="_blank">Instagram</a><a href="https://www.facebook.com/profile.php?id=61587081400000" rel="noopener" target="_blank">Facebook</a></div>
 <div style="display:flex;flex-direction:column;gap:10px"><strong>By invitation</strong><span>First word on new editions, before they are listed.</span>
-<form action="{SIGNUP_ACTION or ('mailto:'+EMAIL)}" method="{'post' if SIGNUP_ACTION else 'get'}" target="_blank" data-signup style="display:flex;gap:8px;flex-wrap:wrap"><label for="news-email" class="sr-only">Email address</label><input id="news-email" name="{SIGNUP_FIELD if SIGNUP_ACTION else 'subject'}" type="email" class="input" placeholder="you@example.com" required style="flex:1 1 160px;min-height:42px"><button type="submit" class="cta-notify" style="min-height:42px;padding:0 18px">Request</button></form></div>
+<form action="{SIGNUP_ACTION or ('mailto:'+EMAIL)}" method="{'post' if SIGNUP_ACTION else 'get'}" target="_blank" data-signup style="display:flex;gap:8px;flex-wrap:wrap"><label for="news-email" class="sr-only">Email address</label><input id="news-email" name="{SIGNUP_FIELD if SIGNUP_ACTION else 'subject'}" type="email" class="input" placeholder="you@example.com" required style="flex:1 1 160px;min-height:42px">{'<input type="text" name="b_a4008603987d48d43a3424541_0001148300" tabindex="-1" value="" aria-hidden="true" style="position:absolute;left:-5000px">' if SIGNUP_ACTION else ''}<button type="submit" class="cta-notify" style="min-height:42px;padding:0 18px">Request</button></form></div>
 </div><div class="wrap" style="padding-bottom:32px;font-size:13px;opacity:.7">&copy; 2026 Fifty Two Press. As an Amazon Associate we earn from qualifying purchases.</div></footer>'''
 
 def shot(t, cls="cardphoto"):
