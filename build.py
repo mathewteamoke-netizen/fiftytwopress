@@ -158,7 +158,20 @@ def home():
 <div class="rv" style="max-width:720px"><span class="eyebrow">The Back to Green Series</span><h2 id="series-h" class="h2">Four tiers. One idea: get back to green.</h2>
 <p class="lede">Hardcover, full-colour, printed to order. Four tiers for four kinds of responsibility; the same system inside every one.</p></div>
 <div class="order-bar rv">{store_select(big=True)}<p>Every edition is printed to order by Amazon and shipped from the facility nearest you. Choose your store; prices and Order buttons follow, and you check out on Amazon with its delivery and returns.</p></div>
-<div class="grid g3" style="margin-top:48px">{cards}</div></div></section>
+<div class="grid g3" style="margin-top:48px">{cards}</div>
+<div class="rv" style="margin-top:64px;max-width:720px"><span class="eyebrow">Which tier is mine?</span><h3 class="h3" style="font-size:28px;margin-top:10px">Same book inside. The tier is who you answer for.</h3></div>
+<div class="tbl-wrap rv"><table class="compare">
+<thead><tr><th></th>{"".join(f'<th><a href="/diaries/{t["slug"]}/"><span class="sw" style="background:{t["cover"]}"></span>{t["short"]}</a></th>' for t in TIERS)}</tr></thead>
+<tbody>
+<tr><th>Made for</th>{"".join(f'<td>{t["who"]}</td>' for t in TIERS)}</tr>
+<tr><th>Cover</th>{"".join(f'<td>{t["colour"]}</td>' for t in TIERS)}</tr>
+<tr><th>Weeks</th><td>52, undated</td><td>52, undated</td><td>52, undated</td><td>52, undated</td></tr>
+<tr><th>Daily colouring</th><td>One panel a day</td><td>One panel a day</td><td>One panel a day</td><td>One panel a day</td></tr>
+<tr><th>Stress score</th><td>Green to red, daily</td><td>Green to red, daily</td><td>Green to red, daily</td><td>Green to red, daily</td></tr>
+<tr><th>Check-ins</th><td>4 quarterly + year review</td><td>4 quarterly + year review</td><td>4 quarterly + year review</td><td>4 quarterly + year review</td></tr>
+<tr><th>Format</th><td>Hardcover, 8.25 &times; 11 in</td><td>Hardcover, 8.25 &times; 11 in</td><td>Hardcover, 8.25 &times; 11 in</td><td>Hardcover, 8.25 &times; 11 in</td></tr>
+<tr><th></th>{"".join(f'<td>{buy(t, 'cta-amazon', 'Order')}</td>' for t in TIERS)}</tr>
+</tbody></table></div></div></section>
 
 <section id="inside" class="sec dark" aria-labelledby="inside-h"><div class="wrap">
 <div class="rv" style="max-width:720px"><span class="eyebrow">Inside every diary</span><h2 id="inside-h" class="h2">Plan it. Colour it. Score it.</h2><p class="lede">A weekly system for a clear head: the few priorities that matter most, ten minutes of colouring to bring your stress level down, and an honest score so you can see your mental load before it tips. 124 pages. 52 undated weeks. Four quarterly check-ins.</p></div>
@@ -169,6 +182,15 @@ def home():
 <figure><img src="/assets/photos/quarter.jpg" alt="Quarterly review page with thirteen weeks of green to red scores" loading="lazy"><figcaption>3 &middot; Score: track your stress level, green to red</figcaption></figure>
 </div></div></section>
 
+
+<section id="life" class="sec" aria-labelledby="life-h"><div class="wrap">
+<div class="rv" style="max-width:720px"><span class="eyebrow">In the wild</span><h2 id="life-h" class="h2">Wherever the week happens.</h2></div>
+<div class="grid g4 life rv" style="margin-top:40px">
+<figure><img src="/assets/photos/life-desk.jpg" width="1080" height="1341" alt="Man at a desk holding the Executive Diary" loading="lazy"><figcaption><strong>At the desk</strong>Monday morning, three priorities, before the phone starts.</figcaption></figure>
+<figure><img src="/assets/photos/life-kitchen.jpg" width="1080" height="1341" alt="Man writing in the Manager's Diary at a kitchen bench" loading="lazy"><figcaption><strong>At home</strong>Ten minutes at the bench with a coffee and a pencil.</figcaption></figure>
+<figure><img src="/assets/photos/life-hotel.jpg" width="1080" height="1341" alt="Man writing in the Professional's Diary at a hotel desk" loading="lazy"><figcaption><strong>Away for work</strong>Hotel desk, phone face-down, ten minutes with the pencil.</figcaption></figure>
+<figure><img src="/assets/photos/life-airport.jpg" width="1080" height="1341" alt="Man in an airport lounge with the Team Leader's Diary" loading="lazy"><figcaption><strong>In transit</strong>The week in the book before the flight home.</figcaption></figure>
+</div></div></section>
 
 <section id="science" class="sec" aria-labelledby="sci-h"><div class="wrap">
 <div class="rv" style="max-width:760px"><span class="eyebrow">The science</span><h2 id="sci-h" class="h2">Why it works.</h2>
