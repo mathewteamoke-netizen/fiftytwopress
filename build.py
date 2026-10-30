@@ -84,6 +84,24 @@ MARK = '''<svg width="{s}" height="{s}" viewBox="0 0 100 100" aria-hidden="true"
 def lockup(light=False, size=40):
     return f'''<span class="brand"{' style="color:#fff"' if light else ''}><span style="color:var(--c-gold)">{MARK.format(s=size)}</span><span style="display:flex;flex-direction:column"><span class="brand-name">Fifty Two Press</span><span class="brand-sub">Fifty-two week diaries</span></span></span>'''
 
+
+PICKS = [
+    ("Coloured pencils", "Faber-Castell Polychromos, tin of 12", "Faber-Castell Polychromos 12 tin",
+     "Oil-based, so they lay down smooth on the panel paper and never smudge the planner side. Twelve is plenty; the panels are about ten minutes, not a masterpiece."),
+    ("Graphite", "Blackwing 602", "Blackwing 602 pencils",
+     "Firm, dark, quiet. The right pencil for three priorities and a score, and it sharpens to a point that lasts the week."),
+    ("The pen in the photos", "Kaweco Brass Sport", "Kaweco Brass Sport ballpoint",
+     "Solid brass, pocket-sized, and it ages with you. Not required, but it is the one on our desk."),
+]
+def picks_section():
+    cards = "".join(f'<div class="card pick rv"><span class="eyebrow">{E(k)}</span><h3 class="h3">{E(n)}</h3><p>{E(why)}</p><a class="cta-amazon pick-link" data-q="{E(q)}" href="#" rel="sponsored noopener" target="_blank">Find on Amazon</a></div>' for k,n,q,why in PICKS)
+    return f'''
+<section id="pens" class="sec dark" aria-labelledby="pens-h"><div class="wrap">
+<div class="rv" style="max-width:720px"><span class="eyebrow">Best with</span><h2 id="pens-h" class="h2">Our desk, not a shop.</h2>
+<p class="lede">Three things that live next to the diary. We don't sell them; these links go to Amazon in your store and we may earn a small commission, at no cost to you.</p></div>
+<div class="grid g3" style="margin-top:40px">{cards}</div></div></section>
+'''
+
 def pixel():
     if not PIXEL_ID: return ""
     return ("<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};"
@@ -192,6 +210,7 @@ def home():
 <figure><img src="/assets/photos/life-airport.jpg" width="1080" height="1341" alt="Man in an airport lounge with the Team Leader's Diary" loading="lazy"><figcaption><strong>In transit</strong>The week in the book before the flight home.</figcaption></figure>
 </div></div></section>
 
+{picks_section()}
 <section id="science" class="sec" aria-labelledby="sci-h"><div class="wrap">
 <div class="rv" style="max-width:760px"><span class="eyebrow">The science</span><h2 id="sci-h" class="h2">Why it works.</h2>
 <p class="lede">None of this is a gimmick. Each part of the diary leans on published research into stress, attention and mental health.</p></div>

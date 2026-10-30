@@ -254,3 +254,6 @@ section[id]{scroll-margin-top:84px}
 .life figcaption{margin-top:12px;color:var(--c-text2);font-size:14px;line-height:1.5}.life figcaption strong{display:block;color:var(--c-text);font:600 15px var(--f-ui);margin-bottom:2px}
 @media (max-width:760px){.life.g4{grid-template-columns:1fr 1fr;gap:14px}}
 .life img{height:auto!important;aspect-ratio:4/5!important;object-position:50% 25%}
+
+.pick{display:flex;flex-direction:column;gap:12px}.pick .h3{font-size:24px;margin-top:4px}.pick p{flex:1;color:var(--c-text2)}.pick .pick-link{align-self:flex-start}
+.dark .pick{background:rgba(255,255,255,.03);border:1px solid var(--c-line);border-radius:var(--r);padding:30px}

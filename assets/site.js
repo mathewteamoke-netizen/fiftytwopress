@@ -77,6 +77,9 @@
       el.innerHTML = p ? p + "<small>" + s.cur + "</small>" : "Price on Amazon";
     });
     document.querySelectorAll("[data-storename]").forEach(function (el) { el.textContent = s.domain; });
+    document.querySelectorAll("a.pick-link").forEach(function (a) {
+      a.href = "https://www." + s.domain + "/s?k=" + encodeURIComponent(a.getAttribute("data-q")) + (s.tag ? "&tag=" + s.tag : "");
+    });
     picks.forEach(function (pk) {
       pk.querySelector(".sp-flag").src = "/assets/flags/" + code.toLowerCase() + ".svg";
       pk.querySelector(".sp-name").textContent = s.label;
