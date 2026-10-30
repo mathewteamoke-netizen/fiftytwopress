@@ -5,6 +5,9 @@ import os, html, json
 OUT = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://fiftytwopress.com"
 EMAIL = "hello@fiftytwopress.com"
+PIXEL_ID = ""          # Meta Pixel ID from Events Manager; empty = no pixel
+SIGNUP_ACTION = ""     # Mailchimp/Beehiiv form action URL; empty = mailto fallback
+SIGNUP_FIELD = "EMAIL" # field name the list expects (Mailchimp: EMAIL)
 TAG = "fiftytwopress-22"  # Amazon Associates tracking id, e.g. fiftytwopress-22
 AMZ = "https://www.amazon.com.au/dp/"
 # Amazon stores where KDP hardcovers are sold. tag = Associates id for that store (only AU joined so far).
@@ -81,6 +84,14 @@ MARK = '''<svg width="{s}" height="{s}" viewBox="0 0 100 100" aria-hidden="true"
 def lockup(light=False, size=40):
     return f'''<span class="brand"{' style="color:#fff"' if light else ''}><span style="color:var(--c-gold)">{MARK.format(s=size)}</span><span style="display:flex;flex-direction:column"><span class="brand-name">Fifty Two Press</span><span class="brand-sub">Fifty-two week diaries</span></span></span>'''
 
+def pixel():
+    if not PIXEL_ID: return ""
+    return ("<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};"
+            "if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];"
+            "s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');"
+            f"fbq('init','{PIXEL_ID}');fbq('track','PageView');</script>"
+            f'<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id={PIXEL_ID}&ev=PageView&noscript=1"></noscript>')
+
 def header():
     return f'''<header class="hdr"><div class="wrap">
 <a href="/" aria-label="Fifty Two Press home">{lockup()}</a>
@@ -94,7 +105,7 @@ def footer():
 <div style="display:flex;flex-direction:column;gap:10px"><strong>Series</strong><a href="/#series">The Back to Green Series</a><span>More series coming</span></div>
 <div style="display:flex;flex-direction:column;gap:10px"><strong>Help</strong><a href="/#faq">How to order</a><a href="/#faq">Which tier is mine?</a><a href="mailto:{EMAIL}">Contact</a><a href="https://www.instagram.com/fiftytwopress" rel="noopener" target="_blank">Instagram</a><a href="https://www.facebook.com/profile.php?id=61587081400000" rel="noopener" target="_blank">Facebook</a></div>
 <div style="display:flex;flex-direction:column;gap:10px"><strong>By invitation</strong><span>First word on new editions, before they are listed.</span>
-<form action="mailto:{EMAIL}" method="get" style="display:flex;gap:8px;flex-wrap:wrap"><label for="news-email" class="sr-only">Email address</label><input id="news-email" name="subject" type="email" class="input" placeholder="you@example.com" required style="flex:1 1 160px;min-height:42px"><button type="submit" class="cta-notify" style="min-height:42px;padding:0 18px">Request</button></form></div>
+<form action="{SIGNUP_ACTION or ('mailto:'+EMAIL)}" method="{'post' if SIGNUP_ACTION else 'get'}" target="_blank" data-signup style="display:flex;gap:8px;flex-wrap:wrap"><label for="news-email" class="sr-only">Email address</label><input id="news-email" name="{SIGNUP_FIELD if SIGNUP_ACTION else 'subject'}" type="email" class="input" placeholder="you@example.com" required style="flex:1 1 160px;min-height:42px"><button type="submit" class="cta-notify" style="min-height:42px;padding:0 18px">Request</button></form></div>
 </div><div class="wrap" style="padding-bottom:32px;font-size:13px;opacity:.7">&copy; 2026 Fifty Two Press. As an Amazon Associate we earn from qualifying purchases.</div></footer>'''
 
 def shot(t, cls="cardphoto"):
@@ -125,7 +136,7 @@ def page(title, desc, path, body, has_buybar=False):
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#121315"><meta name="color-scheme" content="dark">
 <link rel="preload" as="image" href="/assets/photos/hero.jpg" fetchpriority="high">
-<link rel="stylesheet" href="/assets/site.css"></head>
+<link rel="stylesheet" href="/assets/site.css">{pixel()}</head>
 <body><a class="skip" href="#main">Skip to content</a><div class="ftp{' has-buybar' if has_buybar else ''}">{header()}<main id="main">{body}</main>{footer()}</div><script id="store-config" type="application/json">{store_json()}</script><script src="/assets/site.js" defer></script></body></html>'''
 
 def home():

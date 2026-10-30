@@ -48,10 +48,26 @@
     }
     return "AU";
   }
+  // Attribution: remember which ad sent this visitor (utm_content), for the whole session.
+  var adKey = "";
+  try {
+    var q = new URLSearchParams(location.search), uc = q.get("utm_content"), us = q.get("utm_source");
+    if (uc) { adKey = uc.replace(/[^a-z0-9]/gi, "").toLowerCase().slice(0, 12); sessionStorage.setItem("ftp-ad", adKey); sessionStorage.setItem("ftp-src", us || ""); }
+    else { adKey = sessionStorage.getItem("ftp-ad") || ""; }
+  } catch (e) {}
+  // Per-ad Associates tracking ID: fiftytwopress-<adKey>-22 (AU) / -20 (US). Create them in Associates > Manage tracking IDs.
+  function tagFor(s) {
+    if (!s.tag) return "";
+    if (!adKey) return s.tag;
+    var suffix = s.tag.slice(s.tag.lastIndexOf("-"));
+    return "fiftytwopress-" + adKey + suffix;
+  }
   function apply(code) {
     var s = byCode[code] || byCode.AU;
     document.querySelectorAll("a.buy").forEach(function (a) {
-      a.href = "https://www." + s.domain + "/dp/" + a.getAttribute("data-asin") + (s.tag ? "?tag=" + s.tag : "");
+      var tag = tagFor(s);
+      a.href = "https://www." + s.domain + "/dp/" + a.getAttribute("data-asin") + (tag ? "?tag=" + tag : "");
+      a.setAttribute("data-store", code);
     });
     document.querySelectorAll("[data-price]").forEach(function (el) {
       var p = (cfg.prices[el.getAttribute("data-price")] || {})[code];
@@ -81,6 +97,14 @@
     pk.addEventListener("keydown", function (e) { if (e.key === "Escape") { close(pk); btn.focus(); } });
   });
   document.addEventListener("click", function () { picks.forEach(close); });
+  // Pixel: count people who actually go through to Amazon (the buyer proxy Meta optimises on).
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a.buy"); if (!a || !window.fbq) return;
+    fbq("trackCustom", "AmazonClick", { asin: a.getAttribute("data-asin"), store: a.getAttribute("data-store"), ad: adKey });
+    fbq("track", "InitiateCheckout", { content_ids: [a.getAttribute("data-asin")], content_type: "product" });
+  });
+  var sf = document.querySelector("form[data-signup]");
+  if (sf) sf.addEventListener("submit", function () { if (window.fbq) fbq("track", "Lead"); });
   apply(guess());
 })();
 
