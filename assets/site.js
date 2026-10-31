@@ -46,6 +46,18 @@
       if (["AT","BE","CH","LU","PL","CZ","SE","DK","FI","NO","IE","PT","GR"].indexOf(c) >= 0) return "DE";
       if (c === "NZ") return "AU";
     }
+    // No country in the language (common in Facebook/Instagram in-app browsers, which report just "en"):
+    // fall back to the device time zone before defaulting to AU.
+    try {
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+      var tzMap = { "Europe/London": "GB", "Europe/Paris": "FR", "Europe/Rome": "IT", "Europe/Madrid": "ES",
+        "Europe/Amsterdam": "NL", "Asia/Tokyo": "JP", "Pacific/Auckland": "AU" };
+      if (tzMap[tz]) return tzMap[tz];
+      if (/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|St_Johns|Regina|Montreal|Moncton|Whitehorse|Yellowknife|Iqaluit|Glace_Bay|Goose_Bay)$/.test(tz)) return "CA";
+      if (/^(America|US)\//.test(tz) || tz === "Pacific/Honolulu") return "US";
+      if (/^Australia\//.test(tz)) return "AU";
+      if (/^Europe\//.test(tz)) return "DE";
+    } catch (e) {}
     return "AU";
   }
   // Attribution: remember which ad sent this visitor (utm_content), for the whole session.
